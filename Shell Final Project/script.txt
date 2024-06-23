@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# ask the user to enter the incident number
+read -p "Enter the number here : " inc_num
+
+# now let's take the incident number and check if it is closed or open from ticket_status file
+inc_stat=$(grep "$inc_num" ticket_stattus.sh | awk '{print $2}')
+
+# now let's get the event id from event_tickets file
+id=$(grep "$inc_num" event_tickets.txt | awk '{print $2}')
+
+# check if it is closed or open
+if [ "$inc_stat" == "closed" ]; then
+# create new file called events_status.txt and write the event of the desired incident number
+  echo "$id closed" >> events_status.txt
+# print the event and status to the user
+  echo "$id is closed"
+else
+# print the event to user
+  echo "this $id is open now"
+fi
